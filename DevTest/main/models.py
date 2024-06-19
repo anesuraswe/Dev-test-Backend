@@ -1,10 +1,21 @@
 from django.db import models
-
+from django.contrib.auth import get_user_model
 # Create your models here.
 
+User = get_user_model()
 
 class Profile(models.Model):
-    pass
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100, blank=False)
+    middle_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=False)
+    email = models.EmailField(max_length=1000, blank=False)
+    phone_number = models.CharField(max_length=20)
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.middle_name} {self.surname}"
+
 
 class Company(models.Model):
     name = models.CharField(max_length=255)
@@ -41,7 +52,7 @@ class Employee(models.Model):
     def __str__(self):
         return self.name
     
-    
+
 class Role(models.Model):
     name = models.CharField(max_length=255)
 
