@@ -8,7 +8,9 @@ router.register(r'employees', views.EmployeeViewSet, basename='employee')
 router.register(r'companies', views.CompanyViewSet, basename='company')
 router.register(r'departments', views.DepartmentViewSet, basename='department')
 router.register(r'roles', views.RoleViewSet, basename='role')
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('signup/', views.signup, name='signup'),
+    path('signin/', views.signin, name='signin'),
 ]
