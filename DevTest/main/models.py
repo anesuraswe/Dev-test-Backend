@@ -14,7 +14,7 @@ class Profile(models.Model):
 
     @property
     def full_name(self):
-        return f"{self.first_name} {self.middle_name} {self.surname}"
+        return f"{self.first_name} {self.middle_name} {self.last_name}"
 
 
 class Company(models.Model):
