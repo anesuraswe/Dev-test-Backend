@@ -133,11 +133,27 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # Adjust as needed for your frontend URL
-    # Add more origins as necessary, e.g., 'http://example.com'
+    'http://localhost:3000',
+    'http://localhost:5173',
+    # Add other allowed origins here
 ]
 
-# Comment out or correct the import path for CSRF_FAILURE_VIEW if the view does not exist
-# CSRF_FAILURE_VIEW = 'myapp.views.csrf_failure'
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE',
+    'OPTIONS'
+]
+
+CORS_ALLOW_HEADERS = [
+    'Content-Type',
+    'Authorization',
+]
+
+CORS_EXPOSE_HEADERS = [
+    'X-My-Custom-Header',
+]
+
+CORS_ALLOW_CREDENTIALS = True
