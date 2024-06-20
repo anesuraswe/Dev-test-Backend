@@ -64,13 +64,17 @@ def signin(request):
     username = request.data.get('username')
     password = request.data.get('password')
     user = authenticate(username=username, password=password)
-    if user is not None:
+    if user:
         token, created = Token.objects.get_or_create(user=user)
-        profile = Profile.objects.get(user=user)
-        profile_serializer = ProfileSerializer(profile)
-        return Response({
-            'token': token.key,
-            'user': UserSerializer(user).data,
-            'profile': profile_serializer.data
-        }, status=status.HTTP_200_OK)
-    return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            profile = Profile.objects.get(user=user)
+            profile_serializer = ProfileSerializer(profile)
+            return Response({
+                'token': token.key,
+                'user': UserSerializer(user).data,
+                'profile': profile_serializer.data
+            }, status=status.HTTP_200_OK)
+        except Profile.DoesNotExist:
+            return Response({'error': 'Profile not found for the user'}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
